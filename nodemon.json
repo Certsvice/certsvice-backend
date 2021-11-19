@@ -1,0 +1,16 @@
+{
+  "restartable": "rs",
+  "ignore": [],
+  "verbose": true,
+  "execMap": {
+    "go": "go build -o main.exe main.go"
+  },
+  "runOnChangeOnly": false,
+  "watch": [
+    "./"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "go,json,graphql"
+}
