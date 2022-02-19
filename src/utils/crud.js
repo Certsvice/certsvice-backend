@@ -18,11 +18,11 @@ export const getOne = (model) => async (req, res) => {
 
 export const getMany = (model) => async (req, res) => {
   try {
-    const docs = await model.find({ issuer: req.address._id }).lean().exec()
+    const docs = await model.find().lean().exec()
     if (!docs) {
       return res.ststus(400).end()
     }
-    res.status(200).json({ data: docs })
+    res.status(200).json(docs)
   } catch (e) {
     console.error(e)
     res.status(400).end()

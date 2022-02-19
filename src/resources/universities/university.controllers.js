@@ -1,24 +1,26 @@
-import { University } from './university.model'
+import { University, db } from './university.model'
+import { crudControllers } from '../../utils/crud'
+import { list } from './university'
 
-export const getUniversity = async (req, res) => {
-  const university = await University.find()
-  if (!university) {
-    return res.status(404).end()
-  }
-  res.status(200).json({ data: university })
-}
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', async function () {
+  console.log('Connection Successful!')
 
-// export const updateMe = async (req, res) => {
-//   try {
-//     const user = await User.findByIdAndUpdate(req.user._id, req.body, {
-//       new: true,
-//     })
-//       .lean()
-//       .exec()
+  await University.insertMany(list, function (err, docs) {
+    if (err) {
+      console.log('Documents already insert')
+    } else {
+      console.log('Multiple Documents inserted to Collection')
+    }
+  })
+})
 
-//     res.status(200).json({ data: user })
-//   } catch (e) {
-//     console.error(e)
-//     res.status(400).end()
-//   }
+export default crudControllers(University)
+
+// overide
+// export default {
+//     ...crudControllers(University),
+//     getOne(){
+
+//     }
 // }

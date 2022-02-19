@@ -1,50 +1,31 @@
 import mongoose from 'mongoose'
 // import bcrypt from 'bcryptjs'
+// a
 
 const universitySchema = new mongoose.Schema(
   {
-    address: {
+    name: {
       type: String,
       required: true,
       unique: true,
       trim: true,
     },
-    universityName: {
+    code: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
     },
   },
-  { timestamps: true }
+  {
+    versionKey: false,
+  }
 )
-universitySchema.index({ address: 1 })
+universitySchema.index({ code: 1 })
 
-// universitySchema.pre('save', function (next) {
-//   if (!this.isModified('universityName')) {
-//     return next()
-//   }
+const University = mongoose.model('university', universitySchema)
 
-//   bcrypt.hash(this.universityName, 8, (err, hash) => {
-//     if (err) {
-//       return next(err)
-//     }
+const db = mongoose.connection
 
-//     this.universityName = hash
-//     next()
-//   })
-// })
-
-// universitySchema.methods.checkPassword = function (universityname) {
-//   const universityNameHash = this.universityName
-//   return new Promise((resolve, reject) => {
-//     bcrypt.compare(universityname, universityNameHash, (err, same) => {
-//       if (err) {
-//         return reject(err)
-//       }
-
-//       resolve(same)
-//     })
-//   })
-// }
-
-export const University = mongoose.model('university', universitySchema)
+export { db }
+export { University }
